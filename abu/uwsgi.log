@@ -1,0 +1,20 @@
+*** Starting uWSGI 2.0.17.1 (64bit) on [Tue Jan 14 15:58:58 2020] ***
+compiled with version: 4.8.5 20150623 (Red Hat 4.8.5-36) on 08 March 2019 03:58:40
+os: Linux-3.10.0-693.2.2.el7.x86_64 #1 SMP Tue Sep 12 22:26:13 UTC 2017
+nodename: kunlun-ops-jenkins
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /data/ops/django/abu
+detected binary path: /usr/sbin/uwsgi
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /data/ops/django/abu
+your processes number limit is 655350
+your memory page size is 4096 bytes
+detected max file descriptor number: 655350
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (0.0.0.0:8003).
+bind(): Address already in use [core/socket.c line 769]

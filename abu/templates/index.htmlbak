@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    阿布
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-10 mb-10">
+        <div class="card h-50">
+        <form action="/whitelist/addip/" method="post">
+            {% csrf_token %}
+            <div class="card h-200">
+            <h4 class="card-header">
+            <p>IP地址：{{ form.Form_ip }}<span>{{ error.Form_ip }}</p>
+            <p>平台名称：{{ form.Form_hostname }}</p>
+            <p>添加人姓名：{{ form.Form_username }}<span>{{ error.Form_username }}</p>
+           </h4>
+            <div class="card-footer">
+            <input class="btn btn-primary" type="submit" value="添加">
+            </div>
+        </form>
+        </div>
+     </div>
+    </div>
+</div>
+{% endblock content %}
