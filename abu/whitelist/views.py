@@ -31,20 +31,29 @@ def addip(request):
             host_name=hostname_list[alldata['Form_hostname']][1]
             username=alldata['Form_username']
             hostname=host[host_name]
+
             comm=f"bash /data/ops/django/abu/whitelist/fabric.sh '{hostname}' '{ip}'"
             result=subprocess.getstatusoutput(comm)
+
+            x_forwarded_for=request.META.get("HTTP_X_FORWARDED_FOR","")
+            if not x_forwarded_for:
+                x_forwarded_for=request.META.get('REMOTE_ADDR',"")
+            client_ip=x_forwarded_for.split(",")[-1].strip() if x_forwarded_for else ""
+
             file="/data/ops/django/abu/whitelist/operation.log"
             da_time=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-            oplog="操作时间：%s 操作人：%s 平台名称：%s 添加的IP：%s" % (da_time,username,host_name,ip)
+            oplog="操作时间：%s 操作人：%s 登录IP：%s 平台名称：%s 添加的IP：%s" % (da_time,username,client_ip,host_name,ip)
+
             with open(file,'a+') as f:
                 f.write(oplog+'\n')
 
-            chat_id = '-250182564'
-            bot = telegram.Bot(token='1006108054:AAFo47eytOVgEDt9BHQ-Y3gvwEpJGoUQMGs')
-            msg="""    操作时间：%s
-            操作人：%s
-            平台名称：%s
-            添加的IP：%s""" % (da_time,username,host_name,ip)
+            chat_id = '-1001311439088'
+            bot = telegram.Bot(token='1039861974:AAHy4xc_hWPqysYEtmJipuytxIdjH_2h4YQ')
+            msg="""操作时间：%s
+操作人：%s
+登录IP：%s
+平台名称：%s
+添加的IP：%s""" % (da_time,username,client_ip,host_name,ip)
             bot.send_message(chat_id=chat_id,text=msg)
             return render(request,'return.html')
             #return HttpResponse('{"status":"sunness"}',content_type='application/json')
