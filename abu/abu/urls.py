@@ -19,4 +19,6 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('whitelist/',include('whitelist.urls',namespace='whitelist')),
+    path('userprofile/',include('userprofile.urls',namespace='userprofile')),
+    path('captcha/',include('captcha.urls')),
 ]
