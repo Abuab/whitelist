@@ -2,27 +2,18 @@
 {% load staticfiles %}
 
 {% block title %}
+    操作记录
 {% endblock title %}
 
 {% block content %}
-
+    {% if request.session.is_login %}
 <div class="container">
-    <div class="row mt-2">
-
-        {% for article in articles %}
-        <div class="col-4 mb-4">
-            <div class="card h-100">
-                <h4 class="card-header">{{ article.title }}</h4>
-                <div class="card-body">
-                    <p class="card-text">{{ article.body|slice:'100' }}...</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary">修改记录</a>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-
-    </div>
+   <h1>操作记录</h1> 
+    {% for item in alist %}
+      <p>{{ item }}</p>
+    {% endfor %}
 </div>
+    {% else %}
+    <h1>你尚未登录，只能访问公开内容</h1>
+    {% endif %}
 {% endblock content %}

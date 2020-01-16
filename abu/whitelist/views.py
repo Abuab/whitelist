@@ -29,7 +29,10 @@ def addip(request):
             alldata=form.clean()
             ip=alldata['Form_ip'].strip()
             host_name=hostname_list[alldata['Form_hostname']][1]
-            username=alldata['Form_username']
+            if alldata['Form_username'] == '花花':
+                username='我是老90'
+            else:
+                username=alldata['Form_username']
             hostname=host[host_name]
 
             comm=f"bash /data/ops/django/abu/whitelist/fabric.sh '{hostname}' '{ip}'"
@@ -63,3 +66,8 @@ def addip(request):
     else:
         form=AddipForm()
     return render(request,'index.html',{'form':form})
+
+def oplog(request):
+    fo=open('/data/ops/django/abu/whitelist/operation.log','r')
+    list=fo.readlines()
+    return render(request,'oplog.html',{'alist':list})
