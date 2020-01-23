@@ -10,11 +10,18 @@ from django.views.decorators import csrf
 from .forms import AddipForm
 
 host={'百万':'47.52.98.23','开元':'47.244.136.176','勇胜':'47.244.63.32','红牛':'47.90.5.246','银牛':'13.75.117.227','富翁':'47.52.195.54'}
+whiteip=['61.244.66.114']
 
 def hello(request):
     return render(request,'hello.html')
 
 def addip(request):
+    x_forwarded_for=request.META.get("HTTP_X_FORWARDED_FOR","")
+    if not x_forwarded_for:
+        x_forwarded_for=request.META.get('REMOTE_ADDR',"")
+    client_ip=x_forwarded_for.split(",")[-1].strip() if x_forwarded_for else ""
+    if client_ip not in whiteip:
+        return render(request,'userprofile/error.html')
     if request.method == 'POST':
         form = AddipForm(request.POST,request.FILES)
         hostname_list=(
@@ -29,10 +36,7 @@ def addip(request):
             alldata=form.clean()
             ip=alldata['Form_ip'].strip()
             host_name=hostname_list[alldata['Form_hostname']][1]
-            if alldata['Form_username'] == '花花':
-                username='我是老90'
-            else:
-                username=alldata['Form_username']
+            username=alldata['Form_username']
             hostname=host[host_name]
 
             comm=f"bash /data/ops/django/abu/whitelist/fabric.sh '{hostname}' '{ip}'"
@@ -68,6 +72,12 @@ def addip(request):
     return render(request,'index.html',{'form':form})
 
 def oplog(request):
+    x_forwarded_for=request.META.get("HTTP_X_FORWARDED_FOR","")
+    if not x_forwarded_for:
+        x_forwarded_for=request.META.get('REMOTE_ADDR',"")
+    client_ip=x_forwarded_for.split(",")[-1].strip() if x_forwarded_for else ""
+    if client_ip not in whiteip:
+        return render(request,'userprofile/error.html')
     fo=open('/data/ops/django/abu/whitelist/operation.log','r')
     list=fo.readlines()
     return render(request,'oplog.html',{'alist':list})

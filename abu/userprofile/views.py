@@ -4,8 +4,15 @@ from .forms import UserForm,RegisterForm
 import hashlib
 import requests
 
+whiteip=['61.244.66.114']
 
 def login(request):
+    x_forwarded_for=request.META.get("HTTP_X_FORWARDED_FOR","")
+    if not x_forwarded_for:
+        x_forwarded_for=request.META.get('REMOTE_ADDR',"")
+    client_ip=x_forwarded_for.split(",")[-1].strip() if x_forwarded_for else ""
+    if client_ip not in whiteip:
+        return render(request,'userprofile/error.html')
     if request.session.get('is_login',None):
         return redirect('/whitelist/addip/')
     if request.method == 'POST':

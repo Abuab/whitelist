@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% load staticfiles %}
+{% block title %} ERROR {% endblock title %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/login.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+<h1>IP白名单限制，请联系管理员</h1>
+</div>
+{% endblock content %}
