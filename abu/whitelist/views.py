@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.views.decorators import csrf
 from .forms import AddipForm
 
-host={'百万':'47.52.98.23','开元':'47.244.136.176','勇胜':'47.244.63.32','红牛':'47.90.5.246','银牛':'13.75.117.227','富翁':'47.52.195.54'}
+host={'bw':'4xx7.xx.xx.xx','ky':'xx.xx.xx.xx','ys':'xx.xx.xx.xx','hn':'xx.xx.xx.xx','yn':'xx.xx.xx.xx','fw':'4xx7.xx.xx.x'}
 whiteip=['61.244.66.114']
 
 def hello(request):
@@ -25,12 +25,12 @@ def addip(request):
     if request.method == 'POST':
         form = AddipForm(request.POST,request.FILES)
         hostname_list=(
-            (0,'百万'),
-            (1,'开元'),
-            (2,'富翁'),
-            (3,'银牛'),
-            (4,'勇胜'),
-            (5,'红牛'),
+            (0,'bw'),
+            (1,'ky'),
+            (2,'fw'),
+            (3,'yn'),
+            (4,'ys'),
+            (5,'hn'),
         )
         if form.is_valid():
             alldata=form.clean()
