@@ -19,12 +19,12 @@ def user_valinum(value):
 class AddipForm(forms.Form):
     model=Ip
     hostname_list=(
-        (0,'百万'),
-        (1,'开元'),
-        (2,'富翁'),
-        (3,'银牛'),
-        (4,'勇胜'),
-        (5,'红牛'),
+        (0,'bw'),
+        (1,'ky'),
+        (2,'fw'),
+        (3,'yn'),
+        (4,'ys'),
+        (5,'hn'),
     )
     Form_ip=forms.CharField(max_length=15,validators=[ip_valinum,],
                            error_messages={'required':u'IP地址不能为空'},
